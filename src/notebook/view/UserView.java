@@ -38,6 +38,11 @@ public class UserView {
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
                     userController.updateUser(userId, createUser());
+//                    if ();
+                case LIST:
+                    System.out.println(userController.getAllUser());
+                case DELETE:
+
             }
         }
     }
@@ -52,6 +57,15 @@ public class UserView {
         String firstName = prompt("Имя: ");
         String lastName = prompt("Фамилия: ");
         String phone = prompt("Номер телефона: ");
-        return new User(firstName, lastName, phone);
+        if(firstName.isEmpty()){
+            throw new RuntimeException("Не может быть пустым");
+        }
+        if(lastName.isEmpty()){
+            throw new RuntimeException("Не может быть пустым");
+        }
+        if(phone.isEmpty()){
+            throw new RuntimeException("Не может быть пустым");
+        }
+        return new User(firstName.replaceAll(" ", ""), lastName.replaceAll(" ", ""), phone.replaceAll(" ", ""));
     }
 }
