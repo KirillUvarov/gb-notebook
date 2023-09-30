@@ -1,12 +1,12 @@
-package notebook.model.dao.impl;
+package notebook.model.repository.impl;
 
-import notebook.model.dao.Operation;
+import notebook.model.repository.Operationable;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileOperation implements Operation {
+public class FileOperation implements Operationable {
     private final String fileName;
 
     public FileOperation(String fileName) {
@@ -60,4 +60,11 @@ public class FileOperation implements Operation {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public boolean delete(Long id) {
+        return false;
+    }
+
+
 }

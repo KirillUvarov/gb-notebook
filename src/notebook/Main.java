@@ -1,8 +1,8 @@
 package notebook;
 
 import notebook.controller.UserController;
-import notebook.model.dao.impl.FileOperation;
-import notebook.model.repository.GBRepository;
+import notebook.model.repository.impl.FileOperation;
+import notebook.model.repository.GBRepositoryable;
 import notebook.model.repository.impl.UserRepository;
 import notebook.view.UserView;
 
@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         createDB();
         FileOperation fileOperation = new FileOperation(DB_PATH);
-        GBRepository repository = new UserRepository(fileOperation);
+        GBRepositoryable repository = new UserRepository(fileOperation);
         UserController controller = new UserController(repository);
         UserView view = new UserView(controller);
         view.run();

@@ -1,9 +1,9 @@
 package notebook.util.mapper.impl;
 
-import notebook.util.mapper.Mapper;
+import notebook.util.mapper.Mapperable;
 import notebook.model.User;
 
-public class UserMapper implements Mapper {
+public class UserMapper implements Mapperable {
     @Override
     public String toInput(User user) {
         return String.format("%s,%s,%s,%s", user.getId(), user.getFirstName(), user.getLastName(), user.getPhone());

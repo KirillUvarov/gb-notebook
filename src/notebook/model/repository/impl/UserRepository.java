@@ -1,15 +1,14 @@
 package notebook.model.repository.impl;
 
-import notebook.model.dao.impl.FileOperation;
 import notebook.util.mapper.impl.UserMapper;
 import notebook.model.User;
-import notebook.model.repository.GBRepository;
+import notebook.model.repository.GBRepositoryable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserRepository implements GBRepository {
+public class UserRepository implements GBRepositoryable {
     private final UserMapper mapper;
     private final FileOperation operation;
 
@@ -47,6 +46,10 @@ public class UserRepository implements GBRepository {
 
     @Override
     public Optional<User> findById(Long id) {
+        List<User> users = findAll();
+        for(User user : users)
+            if (user.getId().equals(id))
+                return Optional.of(user);
         return Optional.empty();
     }
 
@@ -66,6 +69,15 @@ public class UserRepository implements GBRepository {
 
     @Override
     public boolean delete(Long id) {
+        List<User> users = findAll();
+        for (User user : users) {
+            if (user.getId().equals(id))
+                users.remove(user);
+            write(users);
+            System.out.printf("Запись #" + id + "удалена %n");
+
+            return true;
+        }
         return false;
     }
 
@@ -75,6 +87,7 @@ public class UserRepository implements GBRepository {
             lines.add(mapper.toInput(u));
         }
         operation.saveAll(lines);
+        System.out.printf("Запись сохранена%n");
     }
 
 }

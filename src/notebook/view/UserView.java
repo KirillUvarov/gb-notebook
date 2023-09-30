@@ -17,20 +17,33 @@ public class UserView {
         Commands com;
 
         while (true) {
-            String command = prompt("Введите команду: ");
+            String command = prompt("Введите команду ( \n   " +
+                    " NONE,\n" +
+                    "    READ,\n" +
+                    "    CREATE,\n" +
+                    "    UPDATE,\n" +
+                    "    LIST,\n" +
+                    "    DELETE,\n" +
+                    "    EXIT\n" +
+                    ": ");
             com = Commands.valueOf(command);
             if (com == Commands.EXIT) return;
             switch (com) {
+
                 case CREATE:
                     User u = createUser();
                     userController.saveUser(u);
                     break;
+
+                case NONE:
+                    break;
+
                 case READ:
                     String id = prompt("Идентификатор пользователя: ");
                     try {
                         User user = userController.readUser(Long.parseLong(id));
-                        System.out.println(user);
-                        System.out.println();
+                        System.out.println(user + "\n");
+                        //System.out.println();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -38,11 +51,16 @@ public class UserView {
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
                     userController.updateUser(userId, createUser());
-//                    if ();
+                    break;
+
                 case LIST:
                     System.out.println(userController.getAllUser());
-                case DELETE:
+                    break;
 
+                case DELETE:
+                    userId = prompt("Enter user id: ");
+                    userController.delete(userId);
+                    break;
             }
         }
     }
